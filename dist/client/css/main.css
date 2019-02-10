@@ -98,3 +98,25 @@ div {
       grid-area: player1; }
     #game > #controlPanel > #player2 {
       grid-area: player2; }
+
+#controlsLink {
+  position: absolute;
+  width: 300px;
+  height: 28px;
+  bottom: 0px;
+  right: 25%;
+  left: 50%;
+  margin-left: -150px;
+  text-align: center; }
+  #controlsLink > * {
+    display: inline-block;
+    padding: 8px;
+    border: 2px black;
+    border-radius: 4px;
+    background-color: whitesmoke;
+    color: black;
+    text-decoration: none;
+    text-align: center;
+    line-height: 28px;
+    vertical-align: middle;
+    font-size: 28px; }
