@@ -9,6 +9,9 @@ if (window.localStorage.getItem('playerName')) document.getElementById('playerNa
 
 document.getElementById('joinRoomButton').onclick = () => {
   socket.emit('joinRoom', document.getElementById('roomName').value)
+  socket.on('fullRoom', (roomName) => {
+    window.alert(`Room "${roomName}" is already full!`)
+  })
   socket.on('joinedRoom', (roomName) => {
     document.getElementById('roomSelect').style.display = 'none'
     document.getElementById('game').style.display = 'grid'

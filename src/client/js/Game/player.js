@@ -15,6 +15,14 @@ export default class Player {
   }
 
   move (x, y) {
+    let mult = 1
+
+    if (this.controlManager.getKey(16)) {
+      x *= 2
+      y *= 2
+      mult *= 2
+    }
+
     if (this.game.players[1 - this.game.mainPlayer].pos.x === this.pos.x + x && this.game.players[1 - this.game.mainPlayer].pos.y === this.pos.y + y) {
       this.attackPlayer(x, y)
       return true
@@ -25,13 +33,13 @@ export default class Player {
       return true
     }
 
-    if (this.food < 2) {
+    if (this.food < 2 * mult) {
       this.controlPanel.message('Not enough food to move!', 2000, 'red')
       return true
     }
 
     this.moveTo(this.pos.x + x, this.pos.y + y)
-    this.changeFood(-2)
+    this.changeFood(-2 * mult)
 
     this.socketManager.movePlayer(this.pos.x, this.pos.y)
 
@@ -43,14 +51,16 @@ export default class Player {
     this.pos.y = y
   }
 
-  attackPlayer (x, y) {
-    if (this.food < 5) {
+  attackPlayer (x, y, mult) {
+    if (!mult) mult = 1
+
+    if (this.food < 5 * mult) {
       this.controlPanel.message('Not enough food to attack!', 2000, 'red')
       return
     }
 
     this.socketManager.attackPlayer()
-    this.changeFood(-5)
+    this.changeFood(-5 * mult)
 
     this.endTurn()
   }
@@ -94,7 +104,7 @@ export default class Player {
       else if (this.controlManager.getKeyPressed(83) || this.controlManager.getKeyPressed(40)) this.move(0, 1)
       else if (this.controlManager.getKeyPressed(87) || this.controlManager.getKeyPressed(38)) this.move(0, -1)
       else if (this.controlManager.getKeyPressed(32)) this.eat()
-      else if (this.controlManager.getKeyPressed(16)) this.skipTurn()
+      else if (this.controlManager.getKeyPressed(9)) this.skipTurn()
     }
   }
 

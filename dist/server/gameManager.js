@@ -23,14 +23,13 @@ var GameManager = function () {
     _classCallCheck(this, GameManager);
 
     this.io = io;
+    this.rooms = {};
   }
 
   _createClass(GameManager, [{
     key: 'init',
     value: function init() {
       var _this = this;
-
-      this.rooms = {};
 
       this.io.on('connection', function (socket) {
         var room = null;
@@ -147,6 +146,9 @@ var GameManager = function () {
           room.players.forEach(function (playerI) {
             playerI.socket.emit('endGame');
           });
+
+          _this.rooms[room.name] = null;
+          room = null;
         });
       });
 

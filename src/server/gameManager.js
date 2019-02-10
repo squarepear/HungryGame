@@ -4,11 +4,10 @@ import Map from '../shared/map'
 export default class GameManager {
   constructor (io) {
     this.io = io
+    this.rooms = {}
   }
 
   init () {
-    this.rooms = {}
-
     this.io.on('connection', (socket) => {
       let room = null
       let player = null
@@ -119,13 +118,16 @@ export default class GameManager {
         endTurn(room, player)
       })
 
-      socket.on('disconnect', function () {
+      socket.on('disconnect', () => {
         console.log('user disconnected')
         if (room === null) return
 
         room.players.forEach((playerI) => {
           playerI.socket.emit('endGame')
         })
+
+        this.rooms[room.name] = null
+        room = null
       })
     })
 
