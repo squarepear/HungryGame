@@ -15,8 +15,12 @@ export default class ControlPanel {
 
   update () {
     if (this.msg) document.getElementById('infoBar').innerHTML = `<span style="color: ${this.msgColor};">${this.msg}</span>`
-    else if (this.game.mainPlayer != null) document.getElementById('infoBar').innerText = (this.game.players[this.game.mainPlayer].hasTurn) ? 'Your turn!' : 'Please wait for your turn!'
+    else if (this.game.mainPlayer != null) {
+      document.getElementById('infoBar').innerText = (this.game.players[this.game.mainPlayer].hasTurn) ? 'Your turn!' : 'Please wait for your turn!'
 
+      document.getElementById(`player${this.game.mainPlayer + 1}`).style.color = 'blue'
+      document.getElementById(`player${1 - this.game.mainPlayer + 1}`).style.color = 'red'
+    }
     document.getElementById('player1-name').innerText = this.game.players[0].settings.name || 'Player 1'
     document.getElementById('player1-food').innerText = this.game.players[0].food
     document.getElementById('player1-health').innerText = this.game.players[0].health

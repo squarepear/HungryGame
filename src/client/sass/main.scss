@@ -118,10 +118,14 @@ div {
 
         > #player1 {
             grid-area: player1;
+
+            padding: 8px;
         }
 
         > #player2 {
             grid-area: player2;
+            
+            padding: 8px;
         }
     }
 }

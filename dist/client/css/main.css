@@ -95,9 +95,11 @@ div {
       vertical-align: middle;
       font-size: 36px; }
     #game > #controlPanel > #player1 {
-      grid-area: player1; }
+      grid-area: player1;
+      padding: 8px; }
     #game > #controlPanel > #player2 {
-      grid-area: player2; }
+      grid-area: player2;
+      padding: 8px; }
 
 #controlsLink {
   position: absolute;
