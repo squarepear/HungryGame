@@ -11,11 +11,15 @@ export default class ControlManager {
     sketch.keyPressed = () => {
       this.keys[sketch.keyCode] = true
       this.keysPressed[sketch.keyCode] = true
+
+      return false
     }
 
     sketch.keyReleased = () => {
       this.keys[sketch.keyCode] = false
       this.keysReleased[sketch.keyCode] = true
+
+      return false
     }
   }
 

@@ -14,10 +14,10 @@ export default class Player {
     this.food = 20
   }
 
-  move (x, y) {
+  move (x, y, ignoreShift) {
     let mult = 1
 
-    if (this.controlManager.getKey(16)) {
+    if (this.controlManager.getKey(16) && !ignoreShift) {
       x *= 2
       y *= 2
       mult *= 2
@@ -51,21 +51,35 @@ export default class Player {
     this.pos.y = y
   }
 
-  attackPlayer (x, y, mult) {
-    if (!mult) mult = 1
+  attackPlayer (x, y, ignoreShift) {
+    let mult = 1
+
+    if (this.controlManager.getKey(16) && !ignoreShift) mult = 2
 
     if (this.food < 5 * mult) {
       this.controlPanel.message('Not enough food to attack!', 2000, 'red')
       return
     }
 
-    this.socketManager.attackPlayer()
-    this.changeFood(-5 * mult)
+    this.socketManager.attackPlayer(1 / mult)
+    this.changeFood(-3 * mult)
 
-    this.endTurn()
+    if (Math.abs(x) !== 2 && Math.abs(y) !== 2) {
+      this.endTurn()
+      return
+    }
+
+    if (Math.abs(x) === 2) x *= 0.5
+    if (Math.abs(y) === 2) y *= 0.5
+
+    if (this.move(x, y, true)) this.endTurn()
   }
 
   eat () {
+    if (this.controlManager.getKey(16)) {
+      this.heal()
+      return
+    }
     if (Math.floor(this.map.getTile(this.pos.x, this.pos.y) * 20 * 0.5) < 1) {
       this.controlPanel.message('Food source not large enough to eat!', 2000, 'red')
       return
@@ -78,6 +92,12 @@ export default class Player {
 
   skipTurn () {
     this.controlPanel.message('Turn skipped!', 2000, 'red')
+
+    this.endTurn()
+  }
+
+  heal () {
+    this.socketManager.heal()
 
     this.endTurn()
   }

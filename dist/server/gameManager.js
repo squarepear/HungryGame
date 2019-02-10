@@ -96,13 +96,13 @@ var GameManager = function () {
           });
         });
 
-        socket.on('attack', function () {
-          room.players[1 - player.number].health -= Math.floor(player.food / 2);
+        socket.on('attack', function (mult) {
+          room.players[1 - player.number].health -= Math.floor(player.food * mult / 2);
 
           room.players.forEach(function (playerI) {
             playerI.socket.emit('damagePlayer', {
               playerNum: 1 - player.number,
-              value: Math.floor(player.food / 2)
+              value: Math.floor(player.food * mult / 2)
             });
           });
         });
@@ -124,6 +124,25 @@ var GameManager = function () {
           });
 
           room.map.setTile(pos.x, pos.y, room.map.getTile(pos.x, pos.y) * 0.5);
+        });
+
+        socket.on('heal', function () {
+          var healthChange = Math.floor(player.food * 0.5);
+          var foodChange = -Math.ceil(player.food * 0.5);
+
+          room.players.forEach(function (playerI) {
+            playerI.socket.emit('healPlayer', {
+              playerNum: player.number,
+              value: healthChange
+            });
+            playerI.socket.emit('changeFood', {
+              playerNum: player.number,
+              amount: foodChange
+            });
+          });
+
+          player.health += healthChange;
+          player.food += foodChange;
         });
 
         socket.on('changeFood', function (amount) {

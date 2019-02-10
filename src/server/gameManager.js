@@ -75,13 +75,13 @@ export default class GameManager {
         })
       })
 
-      socket.on('attack', () => {
-        room.players[1 - player.number].health -= Math.floor(player.food / 2)
+      socket.on('attack', (mult) => {
+        room.players[1 - player.number].health -= Math.floor(player.food * mult / 2)
 
         room.players.forEach((playerI) => {
           playerI.socket.emit('damagePlayer', {
             playerNum: 1 - player.number,
-            value: Math.floor(player.food / 2)
+            value: Math.floor(player.food * mult / 2)
           })
         })
       })
@@ -103,6 +103,25 @@ export default class GameManager {
         })
 
         room.map.setTile(pos.x, pos.y, room.map.getTile(pos.x, pos.y) * 0.5)
+      })
+
+      socket.on('heal', () => {
+        let healthChange = Math.floor(player.food * 0.5)
+        let foodChange = -Math.ceil(player.food * 0.5)
+
+        room.players.forEach((playerI) => {
+          playerI.socket.emit('healPlayer', {
+            playerNum: player.number,
+            value: healthChange
+          })
+          playerI.socket.emit('changeFood', {
+            playerNum: player.number,
+            amount: foodChange
+          })
+        })
+
+        player.health += healthChange
+        player.food += foodChange
       })
 
       socket.on('changeFood', (amount) => {

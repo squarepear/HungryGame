@@ -34,6 +34,10 @@ export default class SocketManager {
       this.game.players[data.playerNum].damage(data.value)
     })
 
+    this.socket.on('healPlayer', (data) => {
+      this.game.players[data.playerNum].damage(-data.value)
+    })
+
     this.socket.on('changeFood', (data) => {
       this.game.players[data.playerNum].changeFood(data.amount, true)
     })
@@ -65,8 +69,12 @@ export default class SocketManager {
     })
   }
 
-  attackPlayer () {
-    this.socket.emit('attack')
+  attackPlayer (mult) {
+    this.socket.emit('attack', mult)
+  }
+
+  heal () {
+    this.socket.emit('heal')
   }
 
   useFood (amount) {
