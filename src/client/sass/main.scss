@@ -1,0 +1,122 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: black;
+}
+
+div {
+    -webkit-user-select: none; /* webkit (safari, chrome) browsers */
+    -moz-user-select: none; /* mozilla browsers */
+    -khtml-user-select: none; /* webkit (konqueror) browsers */
+    -ms-user-select: none; /* IE10+ */
+}
+
+#roomSelect {
+    width: 100%;
+    height: 100%;
+    > #rSContainer {
+        background-color: darkgray;
+        
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+
+        width: 400px;
+        height: 500px;
+
+        > #playerName {
+            background-color: whitesmoke;
+            width: 360px;
+            height: 40px;
+
+            position:absolute;
+            left:0; right:0;
+            top:0; bottom:240px;
+            margin:auto;
+
+            color: black;
+            text-align: center;
+            font-size: 36px;
+            
+        }
+
+        > #roomName {
+            background-color: whitesmoke;
+            width: 360px;
+            height: 40px;
+
+            position:absolute;
+            left:0; right:0;
+            top:0; bottom:120px;
+            margin:auto;
+
+            color: black;
+            text-align: center;
+            font-size: 36px;
+            
+        }
+
+
+        > #joinRoomButton {
+            background-color: gray;
+            width: 320px;
+            height: 60px;
+
+            position:absolute;
+            left:0; right:0;
+            top:120px; bottom:0;
+            margin:auto;
+        }
+    }
+}
+
+#game {
+    width: 100%;
+    height: 100%;
+    display: none;
+    grid-template-rows: 3fr 2fr;
+
+    > #p5sketch {
+        width: 100%;
+        height: 100%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    > #controlPanel {
+        display: grid;
+        grid-template-rows: 40px auto;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: "infoBar infoBar"
+                             "player1 player2";
+        background-color: darkgray;
+
+        > * {
+            color: black;
+        }
+
+        > #infoBar {
+            grid-area: infoBar;
+
+            color: black;
+            text-align: center;
+            line-height: 40px;
+            vertical-align: middle;
+            font-size: 36px;
+        }
+
+        > #player1 {
+            grid-area: player1;
+        }
+
+        > #player2 {
+            grid-area: player2;
+        }
+    }
+}

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Staying alive</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+    <div id="roomSelect">
+        <div id="rSContainer">
+            <input id="roomName" type="text">
+            <input id="playerName" type="text">
+            <div id="joinRoomButton"></div>
+        </div>
+    </div>
+    <div id="game">
+        <div id="p5sketch"></div>
+        <div id="controlPanel">
+            <div id="infoBar"></div>
+            <div id="player1">
+                <h2 class="player-name" id="player1-name"></h2>
+                <h3 class="player-health">Health: <span id="player1-health"></span></h3>
+                <h3 class="player-food">Food: <span id="player1-food"></span></h3>
+            </div>
+            <div id="player2">
+                <h2 class="player-name" id="player2-name"></h2>
+                <h3 class="player-health">Health: <span id="player2-health"></span></h3>
+                <h3 class="player-food">Food: <span id="player2-food"></span></h3>
+            </div>
+        </div>
+    </div>
+    <script src="js/client.js"></script>
+</body>
+</html>
